@@ -21,6 +21,7 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   isLoading = false;
   submitted = false;
+  noResult = false;
 
   userForm = this.formBuilder.group({
     firstName: ['', Validators.required],
@@ -62,7 +63,14 @@ export class UserComponent implements OnInit, AfterViewInit {
       )
       .subscribe((data) => {
         this.users = data;
+
         this.isLoading = false;
+
+        if (this.users == null || this.users.length <= 0) {
+          this.noResult = true;
+        } else {
+          this.noResult = false;
+        }
       });
   }
 

@@ -94,6 +94,10 @@
           <td>{{ user.firstName }}</td>
           <td>{{ user.lastName }}</td>
         </tr>
+       
+        <div *ngIf="noResult">
+          <span class="font-italic">There are no results!</span>
+        </div>
       </tbody>
     </table>
   </div>
