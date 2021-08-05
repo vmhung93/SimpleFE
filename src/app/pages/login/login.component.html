@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center align-items-center">
+  <div class="col-sm-6 col-lg-4">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="card-title">Login</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="row pb-3">
+          <div class="col-12">
+            <span>For testing purpose you can use this account to login</span>
+            <br />
+            <span class="font-italic">UserName: admin</span> 
+            <br />
+            <span class="font-italic">Password: handsome@2021</span>
+          </div>
+        </div>
+        <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="email">Username</label>
+                <input
+                  id="email"
+                  type="email"
+                  class="form-control inner-input"
+                  formControlName="userName"
+                  name="userName"
+                  required
+                />
+                <div
+                  *ngIf="
+                    userName.invalid && (userName.dirty || userName.touched)
+                  "
+                  class="text-danger"
+                >
+                  <small *ngIf="userName.errors.required"
+                    >Username is required</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  class="form-control inner-input"
+                  formControlName="password"
+                  name="password"
+                  required
+                />
+                <div
+                  *ngIf="
+                    password.invalid && (password.dirty || password.touched)
+                  "
+                  class="text-danger"
+                >
+                  <small *ngIf="password.errors.required"
+                    >Password is required</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="ml-auto mr-auto">
+              <button
+                type="submit"
+                class="btn btn-success"
+                [disabled]="!loginForm.valid || submitted"
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
