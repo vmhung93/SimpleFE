@@ -1,0 +1,94 @@
+<div class="row mb-3">
+  <div class="col-12 col-md-6">
+    <h2>Add new user</h2>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="firstName">First Name</label>
+          <input
+            type="email"
+            class="form-control"
+            id="firstName"
+            placeholder="First Name"
+            formControlName="firstName"
+            required
+          />
+          <div
+            *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+            class="text-danger"
+          >
+            <small *ngIf="lastName.errors.required"
+              >Fist name is required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="lastName">Last Name</label>
+          <input
+            type="email"
+            class="form-control"
+            id="lastName"
+            placeholder="Last Name"
+            formControlName="lastName"
+            required
+          />
+          <div
+            *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+            class="text-danger"
+          >
+            <small *ngIf="lastName.errors.required"
+              >Last name is required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!userForm.valid || isLoading"
+      >
+        Save
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-6">
+    <h2>Users</h2>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Avatar</th>
+          <th scope="col">Fist name</th>
+          <th scope="col">Last name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            <img
+              [src]="
+                'https://ui-avatars.com/api/?name=' +
+                user.firstName +
+                user.lastName
+              "
+              class="mr-2"
+              style="width: 32px"
+            />
+          </td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
