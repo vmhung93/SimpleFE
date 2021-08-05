@@ -45,21 +45,21 @@ export class AuthenticationService {
   login(username: string, password: string) {
     return this.http
       .post<any>(
-        `${baseUrl}/login`,
+        `${baseUrl}/auth`,
         { username, password },
         { withCredentials: true }
       )
       .pipe(
         map((data) => {
-          localStorage.setItem(LOCAL_STORAGE.Token, data.access_token);
+          localStorage.setItem(LOCAL_STORAGE.Token, data.jwtToken);
           localStorage.setItem(
             LOCAL_STORAGE.CurrentUser,
-            JSON.stringify(data.user)
+            JSON.stringify(data)
           );
 
-          this.userSubject.next(data.user);
+          this.userSubject.next(data);
 
-          return data.user;
+          return data;
         })
       );
   }

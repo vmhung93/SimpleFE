@@ -5,7 +5,7 @@ import { LayoutComponent } from './layouts/layout.component';
 export const AppRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'users',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {

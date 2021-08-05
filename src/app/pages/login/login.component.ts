@@ -48,10 +48,10 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    const { username, password } = this.loginForm.value;
+    const { userName, password } = this.loginForm.value;
 
     this.authenticationService
-      .login(username, password)
+      .login(userName, password)
       .pipe(first())
       .subscribe({
         next: (user) => {
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         error: (res) => {
           const error = res.error;
 
-          switch (error.statusCode) {
+          switch (error.status) {
             case 401:
               this.toastService.showError(
                 'Login failed: Your username or password is incorrect',

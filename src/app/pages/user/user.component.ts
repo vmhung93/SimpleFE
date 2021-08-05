@@ -7,7 +7,9 @@ import { catchError, startWith, switchMap } from 'rxjs/operators';
 import { User } from '../../models/user';
 
 import { UserService } from '../../services/user.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { ToastService } from '../../services/toast.service';
+
 import { CreateUserDto } from '../../services/dtos/users/create-user.dto';
 
 @Component({
@@ -37,6 +39,7 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   constructor(
     private userService: UserService,
+    private authService: AuthenticationService,
     private toastService: ToastService,
     private formBuilder: FormBuilder
   ) {}
@@ -83,5 +86,9 @@ export class UserComponent implements OnInit, AfterViewInit {
         this.userForm.reset();
       })
       .add(() => (this.isLoading = false));
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -5,6 +5,7 @@ import { PreloadAllModules, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 
+import { HttpInterceptorProviders } from './http-interceptors';
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 import { ToastrModule } from 'ngx-toastr';
@@ -22,7 +23,7 @@ import { ToastrModule } from 'ngx-toastr';
     NgbModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [HttpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
