@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 
 import { environment } from '../../environments/environment';
-import { CreateUserDto } from './dtos/users/create-user.dto';
 
 const baseUserUrl = `${environment.apiUrl}/user`;
 
@@ -20,10 +19,6 @@ export class UserService {
 
   findById(id: string) {
     return this.http.get<User>(`${baseUserUrl}/${id}`);
-  }
-
-  create(user: CreateUserDto) {
-    return this.http.post(baseUserUrl, user);
   }
 
   getDummyData() {
