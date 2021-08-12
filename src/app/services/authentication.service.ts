@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -10,6 +10,8 @@ import { User } from '../../app/models/user';
 
 import { LOCAL_STORAGE } from '../constants/local-storage';
 import { environment } from '../../environments/environment';
+
+import { SignUpDto } from './dtos/auth/signup.dto';
 
 const baseUrl = `${environment.apiUrl}`;
 
@@ -42,26 +44,27 @@ export class AuthenticationService {
     return !this.jwtHelperService.isTokenExpired(token);
   }
 
-  login(username: string, password: string) {
+  signIn(username: string, password: string) {
     return this.http
       .post<any>(
-        `${baseUrl}/auth`,
+        `${baseUrl}/auth/sign_in`,
         { username, password },
         { withCredentials: true }
       )
       .pipe(
         map((data) => {
-          localStorage.setItem(LOCAL_STORAGE.Token, data.jwtToken);
-          localStorage.setItem(
-            LOCAL_STORAGE.CurrentUser,
-            JSON.stringify(data)
-          );
+          localStorage.setItem(LOCAL_STORAGE.Token, data.token);
+          localStorage.setItem(LOCAL_STORAGE.CurrentUser, JSON.stringify(data));
 
           this.userSubject.next(data);
 
           return data;
         })
       );
+  }
+
+  signUp(dto: SignUpDto) {
+    return this.http.post<any>(`${baseUrl}/auth/sign_up`, dto);
   }
 
   logout() {

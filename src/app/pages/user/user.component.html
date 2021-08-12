@@ -11,6 +11,28 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
       <div class="form-row">
         <div class="form-group col-md-6">
+          <label for="userName">User Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="userName"
+            placeholder="User Name"
+            formControlName="userName"
+            required
+          />
+          <div
+            *ngIf="userName.invalid && (userName.dirty || userName.touched)"
+            class="text-danger"
+          >
+            <small *ngIf="userName.errors.required"
+              >User name is required</small
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
           <label for="firstName">First Name</label>
           <input
             type="email"
@@ -24,7 +46,7 @@
             *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
             class="text-danger"
           >
-            <small *ngIf="lastName.errors.required"
+            <small *ngIf="firstName.errors.required"
               >Fist name is required</small
             >
           </div>
@@ -53,6 +75,26 @@
         </div>
       </div>
 
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+            formControlName="password"
+            required
+          />
+          <div
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="text-danger"
+          >
+            <small *ngIf="password.errors.required">Password is required</small>
+          </div>
+        </div>
+      </div>
+
       <button
         type="submit"
         class="btn btn-success"
@@ -73,8 +115,10 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Avatar</th>
+          <th scope="col">Username</th>
           <th scope="col">Fist name</th>
           <th scope="col">Last name</th>
+          <th scope="col">Role</th>
         </tr>
       </thead>
       <tbody>
@@ -91,10 +135,12 @@
               style="width: 32px"
             />
           </td>
+          <td>{{ user.userName }}</td>
           <td>{{ user.firstName }}</td>
           <td>{{ user.lastName }}</td>
+          <td>{{ getRole(user.role) }}</td>
         </tr>
-       
+
         <div *ngIf="noResult">
           <span class="font-italic">There are no results!</span>
         </div>

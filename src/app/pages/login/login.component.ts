@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first, switchMap } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { ToastService } from '../../services/toast.service';
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     const { userName, password } = this.loginForm.value;
 
     this.authenticationService
-      .login(userName, password)
+      .signIn(userName, password)
       .pipe(first())
       .subscribe({
         next: (user) => {
@@ -68,12 +68,6 @@ export class LoginComponent implements OnInit {
                 error.message
               );
 
-              break;
-            case 403:
-              this.toastService.showError(
-                "You don't have permission to access / on this site",
-                'Access Denied'
-              );
               break;
           }
         },

@@ -10,7 +10,8 @@ import { UserService } from '../../services/user.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ToastService } from '../../services/toast.service';
 
-import { CreateUserDto } from '../../services/dtos/users/create-user.dto';
+import { SignUpDto } from '../../services/dtos/auth/signup.dto';
+import { ROLE } from 'src/app/constants/roles';
 
 @Component({
   selector: 'app-user',
@@ -24,9 +25,15 @@ export class UserComponent implements OnInit, AfterViewInit {
   noResult = false;
 
   userForm = this.formBuilder.group({
+    userName: ['', Validators.required],
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
+    password: ['', Validators.required],
   });
+
+  get userName() {
+    return this.userForm.get('userName');
+  }
 
   get firstName() {
     return this.userForm.get('firstName');
@@ -34,6 +41,10 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   get lastName() {
     return this.userForm.get('lastName');
+  }
+
+  get password() {
+    return this.userForm.get('password');
   }
 
   refreshEvent: EventEmitter<any> = new EventEmitter();
@@ -78,15 +89,17 @@ export class UserComponent implements OnInit, AfterViewInit {
     this.submitted = true;
     this.isLoading = true;
 
-    const { firstName, lastName } = this.userForm.value;
+    const { userName, firstName, lastName, password } = this.userForm.value;
 
-    const dto: CreateUserDto = {
+    const dto: SignUpDto = {
+      userName,
       firstName,
       lastName,
+      password,
     };
 
-    this.userService
-      .create(dto)
+    this.authService
+      .signUp(dto)
       .pipe(first())
       .subscribe(() => {
         this.toastService.showSuccess('Add user successful');
@@ -98,5 +111,14 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  getRole(userRole) {
+    switch (userRole) {
+      case ROLE.Admin:
+        return 'Admin';
+      default:
+        return 'User';
+    }
   }
 }
